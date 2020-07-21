@@ -14,9 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('web')->get('/user', function (Request $request) {
-    dd(\App\Models\Participant::first());
+Route::group(['namespace' => 'Api'], function () {
+    Route::namespace('Auth')->group( function () {
+        Route::post('login', 'LoginController')->name('login');
+        Route::post('logout', 'LogoutController')->middleware('auth:api');
+    });
 
-    //dd(\App\Models\Participant::first()->events());;
-    return \App\Models\Participant::first();
+    Route::namespace('Participants')
+        ->middleware('auth:api')
+        ->group( function () {
+            Route::resource('participants','ParticipantsController');
+    });
 });
