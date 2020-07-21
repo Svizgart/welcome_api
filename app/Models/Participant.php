@@ -12,6 +12,10 @@ class Participant extends Model
         'email',
     ];
 
+    protected $with = [
+        'events'
+    ];
+
     public function events()
     {
         return $this->belongsToMany(

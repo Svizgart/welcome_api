@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateParticipantsRequest extends FormRequest
+class UpdateParticipantsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,7 @@ class CreateParticipantsRequest extends FormRequest
         return [
             'name' => ['nullable', 'string', 'max:255'],
             'surname' => ['nullable', 'string', 'max:255'],
-            'email' => ['required', 'email', 'unique:participants', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
             'event' => ['required', 'numeric'],
         ];
     }

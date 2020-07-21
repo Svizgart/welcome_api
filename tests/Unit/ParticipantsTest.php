@@ -5,7 +5,6 @@ namespace Tests\Unit;
 use App\Http\Middleware\Authenticate;
 use App\Models\Event;
 use App\Models\Participant;
-use Carbon\Carbon;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
@@ -66,12 +65,13 @@ class ParticipantsTest extends TestCase
             'name' => $name,
             'surname' => $this->faker->firstNameFemale,
             'email' => $this->faker->unique()->email,
-            'events' => [$event->id],
+            'event' => $event->id,
         ];
+
 
         $response = $this->json("POST", route('participants.store'), $payload);
         $response
-            ->assertStatus(Response::HTTP_OK)
+            ->assertStatus(Response::HTTP_CREATED)
             ->assertJsonFragment([
                 'name' => (string) $name
             ]);
@@ -85,18 +85,15 @@ class ParticipantsTest extends TestCase
 
         $name = $this->faker->name;
 
-        factory(Event::class)
-            ->create()
-            ->each(function ($event) use ($name) {
-                $event->participant()->save(factory(Participant::class)->create(['name' => $name]));
-            });
+        $this->createEntity($name);
 
         $participant = Participant::where('name', $name)->first();
 
         $newName = $this->faker->realText(20);
 
         $payload['name'] = $newName;
-        $payload['events'] = [$event->id];
+        $payload['email'] = $participant->email;
+        $payload['event'] = $event->id;
 
         $response = $this->json("PUT", route('participants.update', $participant), $payload);
         $response
@@ -131,11 +128,7 @@ class ParticipantsTest extends TestCase
     {
         $this->withoutMiddleware(Authenticate::class);
 
-        factory(Event::class)
-            ->create()
-            ->each(function ($event) {
-                $event->participant()->save(factory(Participant::class)->create());
-            });
+        $this->createEntity();
 
         $participant = Participant::first();
 
@@ -145,5 +138,25 @@ class ParticipantsTest extends TestCase
             ->assertJsonFragment([
                 'success' => true,
             ]);
+    }
+
+    private function createEntity(string $name = null) :void
+    {
+        factory(Event::class)
+            ->create()
+            ->each(function ($event) use ($name) {
+                if (is_null($name)) {
+                    $event
+                        ->participant()
+                        ->save(factory(Participant::class)
+                            ->create());
+                } else {
+
+                    $event
+                        ->participant()
+                        ->save(factory(Participant::class)
+                            ->create(['name' => $name]));
+                }
+            });
     }
 }
