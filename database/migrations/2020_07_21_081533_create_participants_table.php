@@ -17,6 +17,7 @@ class CreateParticipantsTable extends Migration
             $table->id();
 
             $table->string('name')->nullable();
+            $table->string('surname')->nullable();
             $table->string('email')->unique();
 
             $table->timestamps();

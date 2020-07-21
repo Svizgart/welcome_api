@@ -17,4 +17,14 @@ class Event extends Model
     protected $casts = [
         'date' => 'date',
     ];
+
+    public function participant()
+    {
+        return $this->belongsToMany(
+            Participant::class,
+            'event_participant',
+            'event_id',
+            'participant_id'
+        );
+    }
 }

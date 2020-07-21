@@ -23,6 +23,6 @@ Route::group(['namespace' => 'Api'], function () {
     Route::namespace('Participants')
         ->middleware('auth:api')
         ->group( function () {
-            Route::resource('participants','ParticipantsController');
+            Route::resource('participants','ParticipantsController')->except('create', 'edit');
     });
 });

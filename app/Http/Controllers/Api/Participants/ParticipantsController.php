@@ -5,19 +5,21 @@ namespace App\Http\Controllers\Api\Participants;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ParticipantResource;
 use App\Models\Participant;
+use App\Services\ParticipantService;
 use Illuminate\Http\Request;
 
 class ParticipantsController extends Controller
 {
+    private $service;
+
+    public function __construct(ParticipantService $participantService)
+    {
+        $this->service = $participantService;
+    }
 
     public function index(): ParticipantResource
     {
-        return new ParticipantResource(Participant::all());
-    }
-
-    public function create()
-    {
-        //
+        //return new ParticipantResource($this->service->pagedList());
     }
 
     public function store(Request $request)
@@ -30,16 +32,11 @@ class ParticipantsController extends Controller
         //
     }
 
-    public function edit($id)
+    public function update(Request $request, $id): ParticipantResource
     {
         //
     }
 
-    public function update(Request $request, $id)
-    {
-        //
-    }
-    
     public function destroy($id)
     {
         //
