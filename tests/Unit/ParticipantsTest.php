@@ -48,7 +48,6 @@ class ParticipantsTest extends TestCase
         $participant = factory(Participant::class,5)->create();
 
         $response = $this->json("GET", route('participants.index'));
-
         $response
             ->assertStatus(Response::HTTP_OK)
             ->assertJsonCount($participant->count(), $key = 'data');

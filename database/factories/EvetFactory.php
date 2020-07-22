@@ -13,7 +13,7 @@ $factory->define(Event::class, function (Faker $faker) {
     return [
         'name' => $name,
         'slug' => Str::slug($name),
-        'date' => $faker->date(),
+        'date' => $faker->dateTimeBetween('+1 week', '+1 month'),
         'address' => $faker->address,
         'description' => $faker->randomElement([null, $faker->text(rand(20, 255))])
     ];
