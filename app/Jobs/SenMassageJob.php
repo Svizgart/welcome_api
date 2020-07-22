@@ -2,8 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Mail\EmailNotification;
-use App\Models\Event;
 use App\Models\Participant;
 use App\Services\EmailService;
 use Illuminate\Bus\Queueable;

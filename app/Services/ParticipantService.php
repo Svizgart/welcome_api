@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Jobs\SenMassageJob;
 use App\Providers\MemberAdded;
 use App\Models\{Event, Participant};
 use Carbon\Carbon;
