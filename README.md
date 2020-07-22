@@ -9,6 +9,26 @@
 - `./vendor/bin/phpunit  (Запуск тестов)`
 - `php artisan queue:work  (Запуск воркера очередей)`
 
+## .env`
+
+`APP_DEBUG=` - указать false
+
+`DB_DATABASE=` - назв. базы бвнных
+
+`DB_USERNAME=` - пользователь БД
+ 
+`DB_PASSWORD=` - пароль пользователь БД 
+
+`QUEUE_CONNECTION=` - указать нужный драйвер (redis, database, и т.д.) 
+
+##
+
+если нужна отправка почты нужно расскоментировать 34-ую, 35-ую линию в файле `app/Jobs/SenMassageJob.php` и настроить .env  
+
+- `MAIL_HOST=` - почтовый сервер
+- `MAIL_USERNAME=` - имя полхователя
+- `MAIL_PASSWORD=` - пфроль полхователя
+- `MAIL_FROM_ADDRESS=` - *почта отпровителя
 
 ##
 Работа с API:
@@ -27,9 +47,13 @@
 
 - (post) `api/participants` - добавление участника.
 Параметны: 
+
 'name' - 'имя участника(строка) не обяз.'
+
 'surname' - 'фамилия участника (строка) не обяз.'
+
 'email' - электронная почта уникальное (строка) *обязательное
+
 'event'- id события       
 - (get) `api/participants` - получить список участников
 - (post) `api/participants/{participant}` - удалить участника (параметр id)
