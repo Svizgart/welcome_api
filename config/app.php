@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Zendaemon\Services\ServiceLayerServiceProvider::class,
 
         /*
          * Application Service Providers...
